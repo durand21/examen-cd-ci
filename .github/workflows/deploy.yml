@@ -1,0 +1,26 @@
+name: CD Workflow
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Desplegar en Render
+        env:
+          DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "Error: El secreto RENDER_DEPLOY_HOOK no está configurado en GitHub."
+            exit 1
+          fi
+          
+          curl -X POST "$DEPLOY_URL"
+          echo "Despliegue solicitado a Render exitosamente."
