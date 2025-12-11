@@ -10,7 +10,7 @@ jobs:
     
     env:
       SECRET_KEY: "secret-desarrollo-key"
-      ENV_MODE: "desarrollo"
+      ENV_MODE: "development"
 
     steps:
       - name: Checkout del código
